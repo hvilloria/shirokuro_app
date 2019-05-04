@@ -10,11 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_02_164334) do
+ActiveRecord::Schema.define(version: 2019_04_02_210712) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
+
+  create_table "combos", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "combos_foods", id: false, force: :cascade do |t|
+    t.bigint "combo_id", null: false
+    t.bigint "food_id", null: false
+    t.index ["combo_id", "food_id"], name: "index_combos_foods_on_combo_id_and_food_id"
+    t.index ["food_id", "combo_id"], name: "index_combos_foods_on_food_id_and_combo_id"
+  end
+
+  create_table "combos_orders", id: false, force: :cascade do |t|
+    t.bigint "combo_id", null: false
+    t.bigint "order_id", null: false
+    t.index ["combo_id", "order_id"], name: "index_combos_orders_on_combo_id_and_order_id"
+    t.index ["order_id", "combo_id"], name: "index_combos_orders_on_order_id_and_combo_id"
+  end
 
   create_table "foods", force: :cascade do |t|
     t.integer "category"
@@ -36,6 +55,7 @@ ActiveRecord::Schema.define(version: 2019_04_02_164334) do
     t.uuid "number_reference"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "total"
   end
 
 end

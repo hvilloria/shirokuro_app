@@ -1,0 +1,11 @@
+h1 ordenes
+table
+  tr
+    th estado
+    th numero de referencia
+    th Precio total
+  - @orders.each do |order|
+    tr
+      td = order.status
+      td = order.number_reference
+      td = order.total
